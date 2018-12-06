@@ -37,6 +37,11 @@ def grab_mApe_wishList(id_string) :
         alt_text = base_xpath[0].text+" "
         url = product.xpath('div[@class="detail"]/a/@href')[0]+" "
         title = product.xpath('div[@class="detail"]/a')[0].text+" "
+        format = product.xpath('div[@class="detail"]/div[@class="format"]')[0].text + " "
+        image_url_sml = product.xpath('div[@class="item"]/div[@class="image"]/a/img/@src')
+        #print("[Image url]",image_url_sml,format)
+        #image_url_lrg = product.xpath('div[@class="detail"]/a/@href')[0] + " "
+
         current_price = product.xpath('div[@class="pricing"]/div[@class="product-price"]/span')[0].text+" "
         previous_price = product.xpath('div[@class="pricing"]/div[@class="saving"]/s')
         if len(previous_price) > 0 :
@@ -125,30 +130,38 @@ def grab_mApe_results (searchType) :
     return mape_list
 
 class Movie_object(object):
-    def __init__(self,title, format,rating,link,nprice,price,hprice):
+    def __init__(self,title, imdb, format):
         self.title = title
         self.format = format
-        self.rating = rating
-        self.link = link
-        self.price = price
-        self.nprice = nprice
-        self.hprice = hprice
+
+        #Ratings format: { site: rating,}
+        self.ratings = {}
+
+        #Links format: { store: link, }
+        self.links = {}
+
+        #Prices format: { store: price, }
+        self.prices = {}
+
+    def add_store (self, store, link, price):
+        if store not in self.links :
+            self.links[store] = link
+            self.prices[store] = price
+
+    def add_rating ( site, rating ):
+        pass
+
     def get_format (self):
         return self.format
     def get_rating (self):
-        return self.rating
+        return self.ratings
     def get_link (self):
-        return self.link
+        return self.links
     def get_prices(self):
-        return self.price,'|', self.hprice
-    def get_nprice(self):
-        return self.nprice
-    def get_price(self):
-        return self.price
-    def get_hprice(self):
-        return self.hprice
+        return self.prices
+
     def __str__(self):
-        return '%s | %s | %s \tLink: %s\n\t @ normal: %s | new: %s | Special: %s'%(self.title,self.format,self.rating,self.link,self.price, self.nprice, self.hprice)
+        return '%s | %s | %s \tLink: %s\n\t @ prices: %s'%(self.title,self.format,self.ratings,self.links,self.prices)
 
     '''def __repr__(self):
         return self.title, '|', self.format, '|', self.rating,'\tLink:', self.link,'@',self.price, '|', 'Special:', self.hprice
