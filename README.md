@@ -1,6 +1,6 @@
 # Media_Scraper
 
-## Current Release | [![Version](https://img.shields.io/badge/Release-v0.1.0-brightgreen.svg)](https://github.com/dMacGit/Media_Scraper/releases/tag/v0.1.0)
+## Current Release | [![Version](https://img.shields.io/badge/Release-v0.1.1-brightgreen.svg)](https://github.com/dMacGit/Media_Scraper/releases/tag/v0.1.1)
 
 ### This is a Media Wish-list web scraper 
 
