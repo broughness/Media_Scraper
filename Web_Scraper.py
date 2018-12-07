@@ -7,6 +7,7 @@
 
 from lxml import html
 from urllib import parse
+import json
 
 import requests
 
@@ -48,6 +49,27 @@ def imdb_search( title ):
             return results.content
         else :
             raise IOError("Bad return code: "+results.status_code)
+
+def pars_imdb_object( data ):
+    #Remove starting "b'{" and ending "}" characters.
+    json_data = data.decode('utf8')
+    #clean_data = str(data)[3:-2:1]
+    print(json_data)
+    return(json_data)
+
+def laod_imdb_object( jasonData ):
+    #basic: [title, imdbID, format]
+    data_copy = json.loads(jasonData)
+    #data_test = json.load(data_copy)
+    print(data_copy)
+    if "title" and "imdbID" and "DVD" in data_copy:
+        title = data_copy['Title']
+        imdbId = data_copy['imdbID']
+        format = "blu-ray"
+        dvd_released = data_copy['DVD']
+        newObject = Movie_object(title,imdbId,format)
+    return newObject
+
 
 def grab_mApe_wishList(id_string) :
 
@@ -221,6 +243,7 @@ def grab_mApe_results (searchType) :
 class Movie_object(object):
     def __init__(self,title, imdb, format):
         self.title = title
+        self.imdbID = imdb
         self.format = format
 
         #Ratings format: { site: rating,}
@@ -231,6 +254,18 @@ class Movie_object(object):
 
         #Prices format: { store: price, }
         self.prices = {}
+
+
+    def get_title(self):
+        return self.title
+
+    def get_imdbID(self):
+        return self.imdbID
+
+    def get_format(self):
+        return self.format
+
+
 
     def add_store (self, store, link, price):
         if store not in self.links :
@@ -250,7 +285,10 @@ class Movie_object(object):
         return self.prices
 
     def __str__(self):
-        return '%s | %s | %s \tLink: %s\n\t @ prices: %s'%(self.title,self.format,self.ratings,self.links,self.prices)
+        return "Title: %s \nimdb: %s \nFormat: %s"%(self.get_title(),self.get_imdbID(),self.get_format())
+
+    """def __str__(self):
+        return '%s | %s | %s \tLink: %s\n\t @ prices: %s'%(self.title,self.format,self.ratings,self.links,self.prices)"""
 
     '''def __repr__(self):
         return self.title, '|', self.format, '|', self.rating,'\tLink:', self.link,'@',self.price, '|', 'Special:', self.hprice
