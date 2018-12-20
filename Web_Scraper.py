@@ -1,22 +1,35 @@
-'''
-    This project is a simple learning exercise for getting into web scraping.
+'''This project is a simple learning exercise for getting into web scraping.
 
-    For this I will be using the libraries "lxml" and "requests"
+Examples:
+    Grabbing from Mightyape site - https://www.mightyape.co.nz/movies-tv/movies/all?sort=2&q=movieformat~blu-ray
 
+    For this I will be using specific libraries:
+
+    - lxml: For grabbing data in HTML format for "xpath" to parse
+
+    - requests: Sending requests to web services.
+
+    - json: For interfacing with the OMDBapi, and extracting Media data
+
+
+Note:
+    This script will potentially brake with any update to the sourced website.
+
+Todo:
+    * Add support for other websites (Warehouse, NZgameshop, Jb Hi Fi ??)
+    * Tidy up/clean code
+    * Rejig functions (Make work flow simple)
 '''
 
 from lxml import html
 from urllib import parse
 import json
-
 import requests
 
-#Specifying global default search type
-SEARCH_BD_MV_TYPE = "Popularity"
 
-#Title search URL https://www.mightyape.co.nz/movies-tv/movies/all?sort=2&q=movieformat~blu-ray
+SEARCH_BD_MV_TYPE = "Popularity" #Specifying global default search type, Unused for right now
 
-#First function grabes results from the first website
+
 
 Default_Location = "private_data/"
 Default_File = "private_link.txt"
