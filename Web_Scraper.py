@@ -37,54 +37,64 @@ Default_File = "private_link.txt"
 Default_OMDb_api_key = "private_key.txt"
 
 
-"""Function built to load up private_link url string
 
-Example:
-    Used for grabbing the private link to a web-list of media titles.
-    This is stored in plain text locally in the "private_link.txt" file.
-    Is saved in the form of "id_string={private_link}" remove quotes " and {} brackets.
-    This file is created within the "private_data" sub folder to the scripts home directory.    
-    
-Note:
-    - To be DEPRECATED
-    - This function will be made obsolete as will switch from a link, to private list, to using local/private list.
-"""
 def private_link_loader():
+    """Function built to load up private_link url string
+
+    Example:
+        Used for grabbing the private link to a web-list of media titles.
+        This is stored in plain text locally in the "private_link.txt" file.
+        Is saved in the form of "id_string={private_link}" remove quotes " and {} brackets.
+        This file is created within the "private_data" sub folder to the scripts home directory.
+
+    Note:
+        To be DEPRECATED
+        This function will be made obsolete as will switch from a link, to private list, to using local/private list.
+    """
     with open(Default_Location + Default_File, 'r') as f:
         private_link = f.readline()
         link_string = private_link.split('=')[1].replace("'", "").strip()
         f.close()
     return link_string
 
-"""Fucntion used to load API key to OMDBapi webservice.
-
-    This Key is needed in every request to the api. And must trail any parameters/values in the request link.
-    
-Example:
-    Key is copied in plain text to a local text file "private_key.txt".
-    Format of the file is "key:{api_key}", remove quotes " and {} brackets.
-    This file is stored within a folder named "private_data" in the scripts home directory. 
-    
-Note:
-    - This is going to be the main source for title meta-data searching.
-
-Todo:
-    - Need to make sure alternative method of meta-data searching is setup, in-case of api change or close.
-"""
 def laod_api_key ():
+    """Fucntion used to load API key to OMDBapi webservice.
+
+        This Key is needed in every request to the api. And must trail any parameters/values in the request link.
+
+    Example:
+        Key is copied in plain text to a local text file "private_key.txt".
+        Format of the file is "key:{api_key}", remove quotes " and {} brackets.
+        This file is stored within a folder named "private_data" in the scripts home directory.
+
+    Note:
+        This is going to be the main source for title meta-data searching.
+
+    Todo:
+        Need to make sure alternative method of meta-data searching is setup, in-case of api change or close.
+    """
+
     with open(Default_Location + Default_OMDb_api_key, 'r') as f:
         api_key_raw = f.readline()
         key = api_key_raw.split(':')[1].strip()
         f.close()
     return key
 
-"""Main function that calls the OMDBapi with search title.
-
-    Args: Takes as argument the "Title" of the movie to search.
-    
-    Returns: Results object.
-"""
 def imdb_search( title ):
+    """Main function that calls the OMDBapi with search title.
+
+    Args:
+        Takes as argument the "Title" of the movie to search.
+        Needs to attach the api key in every request.
+
+    Returns:
+        Results object.
+
+    Todo:
+        Note that can search for ttnumber. Unsure if useful at this time.
+
+    """
+
     if title is not None:
         #http://www.omdbapi.com/?i=[ttnumber]&apikey=
         #http://www.omdbapi.com/?t=[title]&apikey=
