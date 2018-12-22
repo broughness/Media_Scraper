@@ -269,11 +269,15 @@ def search_mApe_title (title,format):
     return mape_list
 
 def grab_mApe_results (searchType) :
-    """
-            This Function takes as input a type to search by
-            and returns a list of results.
-         :param searchType: Type of search to grab results from
-         :return: MightyApe results from website
+    """Searches for Movies based on search type parameter
+
+    This Function takes as input a type to search by and returns a list of results.
+
+    :param searchType: Type of search to grab results from
+    :return mape_list: List of returned strings, holding movie titles
+
+    Note:
+        This function is not being used currently. Will be removed in future cleanup
     """
 
     mape_main_url = 'https://www.mightyape.co.nz/'
@@ -329,7 +333,31 @@ def grab_mApe_results (searchType) :
     return mape_list
 
 class Movie_object(object):
+    """Movie Object class
+
+    Holds meta-data information. Useful for running searches.
+
+    Example: Object creation
+        Movie_object("ant man", tt0478970, blu-ray)
+
+    Can also save website prices and ratings to movie object
+
+    Example: Saving store price
+        add_store("website name", url, price)
+
+    Example: Saving website rating
+        add_rating("website name", url, rating)
+
+    """
     def __init__(self,title, imdb, format):
+        """Initializing the Movie object
+
+        Requires that the "title", imdb ID, and media format be parsed as args.
+
+        :param title: Title of the movie
+        :param imdb: The IMDB ID
+        :param format: Media format.
+        """
         self.title = title
         self.imdbID = imdb
         self.format = format
@@ -352,8 +380,6 @@ class Movie_object(object):
 
     def get_format(self):
         return self.format
-
-
 
     def add_store (self, store, link, price):
         if store not in self.links :
