@@ -36,8 +36,6 @@ Default_Location = "private_data/"
 Default_File = "private_link.txt"
 Default_OMDb_api_key = "private_key.txt"
 
-
-
 def private_link_loader():
     """Function built to load up private_link url string
 
@@ -83,14 +81,12 @@ def laod_api_key ():
 def imdb_search( title ):
     """Main function that calls the OMDBapi with search title.
 
-    Args:
-        Takes as argument the "Title" of the movie to search.
+    :param title: Takes as argument the "Title" of the movie to search.
         Needs to attach the api key in every request.
 
-    Returns:
-        Results object.
+    :return results: Results object.
 
-    Todo:
+    :TODO:
         Note that can search for ttnumber. Unsure if useful at this time.
 
     """
@@ -109,6 +105,14 @@ def imdb_search( title ):
             raise IOError("Bad return code: "+results.status_code)
 
 def pars_imdb_object( data ):
+    """IMDBapi object parser function
+
+    Simply takes input data object and decodes into json ruturn object.
+
+    :param data: The resulting data from the imdb_search() function
+
+    :return json_data: Returns decoded json object
+    """
     #Remove starting "b'{" and ending "}" characters.
     json_data = data.decode('utf8')
     #clean_data = str(data)[3:-2:1]
@@ -116,6 +120,13 @@ def pars_imdb_object( data ):
     return(json_data)
 
 def laod_imdb_object( jasonData ):
+    """Movie Object builder function
+
+    Creator function that builds movie object from parsed Json data
+
+    :param jasonData: Some parsed Json movie meta-data
+    :return movieObject: Returns a new Movie_object
+    """
     #basic: [title, imdbID, format]
     data_copy = json.loads(jasonData)
     #data_test = json.load(data_copy)
@@ -123,6 +134,7 @@ def laod_imdb_object( jasonData ):
     if "title" and "imdbID" and "DVD" in data_copy:
         title = data_copy['Title']
         imdbId = data_copy['imdbID']
+        # Filling parameter as Blu-ray format
         format = "blu-ray"
         dvd_released = data_copy['DVD']
         newObject = Movie_object(title,imdbId,format)
@@ -130,7 +142,17 @@ def laod_imdb_object( jasonData ):
 
 
 def grab_mApe_wishList(id_string) :
+    """Mighty Ape private Wishlist web scraper function
 
+    Scraper for parsing Might Ape private wishlist.
+    Set up to build skeleton html code for each item to be output on web-page
+
+    :param id_string: This is the private id_string for the wish-list of media.
+    :return returned_data: Currently returning list items in skeleton html code for web-page
+
+    TODO:
+        Need to move html building to separate function. Keep this function for scraping data.
+    """
     returned_data = ""
     mape_wishList_url = 'https://www.mightyape.co.nz/wishlist/'+id_string
     print("Grabbing results from:",mape_wishList_url)
@@ -173,23 +195,31 @@ def grab_mApe_wishList(id_string) :
 
     return returned_data
 
-"""
-    Future function to output to text file.
-    - Not yet implemented!
-"""
+
 def output_to_html(string_data):
+    """Future function to output to text file.
+
+    Note:
+        Not yet implemented!
+    """
     raise NotImplementedError("This function is not yet Implemented!")
 
 
 def search_mApe_title (title,format):
-    #https://www.mightyape.co.nz/movies-tv/movies/all?q=ant+man+movieformat~blu-ray
+    """Mighty Ape Search function
+
+    This is a future search function to by-pass the need for using a private wish-list.
+    Will require a pre-saved list of media titles to search for.
+    This Function takes as input a title and format type to search by and returns a list of results.
+
+    Example:
+        https://www.mightyape.co.nz/movies-tv/movies/all?q=ant+man+movieformat~blu-ray
+
+    :param title: Title of movie to search
+    :param format: Format of media to search
+
+    :return returned_data: MightyApe results from website
     """
-                This Function takes as input a title and format type to search by
-                and returns a list of results.
-             :param title: Title of movie to search
-             :param format: Format of media to search
-             :return: MightyApe results from website
-        """
 
     mape_main_url = 'https://www.mightyape.co.nz/'
     # Defining the url paths for search types
