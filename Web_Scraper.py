@@ -408,6 +408,24 @@ class Movie_object(object):
         return self.title, '|', self.format, '|', self.rating,'\tLink:', self.link,'@',self.price, '|', 'Special:', self.hprice
     The below loop works! Do not touch'''
 
+def movie_fileName_parser(fileName):
+    rawName = str(fileName)
+    pre_parsed = ""
+    parsed_Name = ""
+    if rawName.__contains__('.'):
+        splitName = str(fileName).split('.')
+        pre_parsed = splitName[0]
+        fileType = splitName[1]
+        print("File type was: ",fileType)
+    else:
+        raise Exception("Invalid file Name! ",rawName)
+    if rawName.__contains__("_"):
+        parsed_Name = rawName.split("_")[0]
+    else:
+        raise Exception("Un-parsable file Name! ", rawName)
+    return parsed_Name
+
+
 """copy_of_list = grab_mApe_results(search_by_Title)
 for item in copy_of_list:
     print('',copy_of_list[item])"""
