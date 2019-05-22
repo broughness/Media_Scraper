@@ -62,7 +62,7 @@ def laod_api_key ():
 
     Example:
         Key is copied in plain text to a local text file "private_key.txt".
-        Format of the file is "key:{api_key}", remove quotes " and {} brackets.
+        Format of the file is "key:api_key", remove quotes ".
         This file is stored within a folder named "private_data" in the scripts home directory.
 
     Note:
