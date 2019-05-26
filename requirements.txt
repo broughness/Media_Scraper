@@ -1,2 +1,3 @@
-lxml>=4.3.3
-requests>=2.22.0
+-e git://github.com/dMacGit/meta_core.git#egg=meta_core
+#lxml>=4.3.3
+#requests>=2.22.0

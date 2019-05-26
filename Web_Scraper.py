@@ -55,7 +55,7 @@ def private_link_loader():
         f.close()
     return link_string
 
-def laod_api_key ():
+'''def laod_api_key ():
     """Fucntion used to load API key to OMDBapi webservice.
 
         This Key is needed in every request to the api. And must trail any parameters/values in the request link.
@@ -138,7 +138,7 @@ def laod_imdb_object( jasonData ):
         format = "blu-ray"
         dvd_released = data_copy['DVD']
         newObject = Movie_object(title,imdbId,format)
-    return newObject
+    return newObject'''
 
 
 def grab_mApe_wishList(id_string) :
